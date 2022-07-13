@@ -1,0 +1,66 @@
+
+.intem {
+    margin: 20px 0;
+}
+.item {
+    margin: 10px 0;
+}
+
+.done {
+  text-decoration: line-through;
+}
+
+.form {
+    margin: 20px 0;
+}
+
+.count {
+  text-align: center;
+}
+
+.fadeTest-enter-active, .fadeTest-leave-active {
+  /* transition: opacity .5s; */
+  transition-property: opacity, transform;
+  transition-duration: 0.5s;
+  transition-timing-function: ease-in-out;
+  transform-style: preserve-3d;
+}
+.fadeTest-enter, .fadeTest-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+  opacity: 0;
+  transform: scale(0.5) ;
+}
+
+.fadeTest-enter-active {
+  animation: bounceY .5s;
+}
+.fadeTest-leave-active {
+  animation: bounceX .5s reverse;
+}
+
+@keyframes bounceX {
+  0% {
+    transform: scale(0) rotateX(180deg);
+  }
+  50% {
+    transform: scale(1.5) rotateX(90deg);
+  }
+  100% {
+    transform: scale(1) rotateX(0deg);
+  }
+}
+@keyframes bounceY {
+  0% {
+    transform: scale(0) rotatey(180deg);
+  }
+  50% {
+    transform: scale(1.5) rotatey(90deg);
+  }
+  100% {
+    transform: scale(1) rotatey(0deg);
+  }
+}
+
+.img {
+  width: 320px;
+  height: 240px;
+}
