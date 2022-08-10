@@ -15,10 +15,11 @@
     </span>
 
     <ul class="colors colors--black">
-      <li class="colors__item" v-for="color in colors(product.colorIdArr)" :key="color.id">
-        <label class="colors__label" :for="`color${color.id}`">
-          <input class="colors__radio sr-only" :id="`color${color.id}`" type="radio"
-          :value="color.color" v-model="selectedСolor">
+      <li class="colors__item" v-for="color in colors(product.colorIdArr)"
+      :key="`${product.id}${color.id}`">
+        <label class="colors__label" :for="`color${product.id}${color.id}`">
+          <input class="colors__radio sr-only" :id="`color${product.id}${color.id}`" type="radio"
+          :value="color.id" v-model="selectedСolor">
           <span class="colors__value" :style="{backgroundColor: color.color}">
           </span>
         </label>
