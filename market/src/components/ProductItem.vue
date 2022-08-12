@@ -1,6 +1,7 @@
 <template>
   <li class="catalog__item">
-    <a class="catalog__pic" href="#">
+    <a class="catalog__pic" href="#"
+     @click.prevent="goToPage('product', {id: product.id})">
       <img :src="product.img" :alt="product.title">
     </a>
 
@@ -11,7 +12,7 @@
     </h3>
 
     <span class="catalog__price">
-      {{product.price}}₽
+      {{product.price | numberFormat}}₽
     </span>
 
     <ul class="colors colors--black">
@@ -19,7 +20,7 @@
       :key="`${product.id}${color.id}`">
         <label class="colors__label" :for="`color${product.id}${color.id}`">
           <input class="colors__radio sr-only" :id="`color${product.id}${color.id}`" type="radio"
-          :value="color.id" v-model="selectedСolor">
+          :value="color.color" v-model="selectedСolor">
           <span class="colors__value" :style="{backgroundColor: color.color}">
           </span>
         </label>
@@ -30,6 +31,8 @@
 
 <script>
 import colors from '@/data/colors';
+import goToPage from '@/helpers/goToPage';
+import numberFormat from '@/helpers/numberFormat';
 
 export default {
   data() {
@@ -37,25 +40,18 @@ export default {
       selectedСolor: '',
     };
   },
+  filters: {
+    numberFormat,
+  },
   props: ['product'],
   methods: {
     colors(prodColors) {
-      let filterColors = colors;
-      function filterArr(item, arr) {
-        let value = false;
-        arr.forEach((e) => {
-          if ((item) === e) {
-            value = true;
-          }
-        });
-        return value;
-      }
-      filterColors = filterColors.filter((color) => filterArr(color.id, prodColors));
-      return filterColors;
+      return colors.filter((e) => prodColors.includes(e.id));
     },
+    goToPage,
   },
   mounted() {
     this.selectedСolor = this.$el.querySelector('.colors__radio').value;
-  }, // как фиксить этот баг я не понял, тут неправильно переключается
+  },
 };
 </script>
