@@ -68,7 +68,7 @@
             <fieldset class="form__block">
               <legend class="form__legend">Цвет:</legend>
               <ul class="colors">
-              <li class="colors__item" v-for="color in colors(product.colorIdArr)"
+              <li class="colors__item" v-for="color in colorsArr"
               :key="`${product.id}${color.id}`">
                 <label class="colors__label" :for="`color${product.id}${color.id}`">
                   <input class="colors__radio sr-only" :id="`color${product.id}${color.id}`"
@@ -223,7 +223,7 @@ import numberFormat from '@/helpers/numberFormat';
 export default {
   data() {
     return {
-      selectedСolor: '',
+      selectedСolor: this.pageParam.selectedСolor,
     };
   },
   props: ['pageParam'],
@@ -237,15 +237,15 @@ export default {
     category() {
       return categories.find((e) => e.id === this.product.categoryId);
     },
+    colorsArr() {
+      return this.product.colorIdArr.map((e) => colors.find((item) => item.id === e));
+    },
   },
   methods: {
     colors(prodColors) {
       return colors.filter((e) => prodColors.includes(e.id));
     },
     goToPage,
-  },
-  mounted() {
-    this.selectedСolor = this.$el.querySelector('.colors__radio').value;
   },
 };
 </script>

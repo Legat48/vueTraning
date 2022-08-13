@@ -1,7 +1,7 @@
 <template>
   <li class="catalog__item">
     <a class="catalog__pic" href="#"
-     @click.prevent="goToPage('product', {id: product.id})">
+     @click.prevent="goToPage('product', {id: product.id, selectedСolor})">
       <img :src="product.img" :alt="product.title">
     </a>
 
@@ -16,8 +16,7 @@
     </span>
 
     <ul class="colors colors--black">
-      <li class="colors__item" v-for="color in colors(product.colorIdArr)"
-      :key="`${product.id}${color.id}`">
+      <li class="colors__item" v-for="color in colorsArr" :key="`${product.id}${color.id}`">
         <label class="colors__label" :for="`color${product.id}${color.id}`">
           <input class="colors__radio sr-only" :id="`color${product.id}${color.id}`" type="radio"
           :value="color.color" v-model="selectedСolor">
@@ -45,10 +44,12 @@ export default {
   },
   props: ['product'],
   methods: {
-    colors(prodColors) {
-      return colors.filter((e) => prodColors.includes(e.id));
-    },
     goToPage,
+  },
+  computed: {
+    colorsArr() {
+      return this.product.colorIdArr.map((e) => colors.find((item) => item.id === e));
+    },
   },
   mounted() {
     this.selectedСolor = this.$el.querySelector('.colors__radio').value;
