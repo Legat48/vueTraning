@@ -1,20 +1,33 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import HomeView from '../views/HomeView.vue';
+import MainPage from '@/pages/MainPage.vue';
+import ProductPage from '@/pages/ProductPage.vue';
+import CartPage from '@/pages/CartPage.vue';
+import NotFoundPage from '@/pages/NotFoundPage.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView,
+    name: 'main',
+    component: MainPage,
     devtool: 'source-map',
   },
   {
-    path: '/about',
-    name: 'about',
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue'),
+    path: '/product/:id',
+    name: 'product',
+    component: ProductPage,
+  },
+  {
+    path: '/cart',
+    name: 'cart',
+    component: CartPage,
+  },
+  {
+    path: '*',
+    name: 'NotFoundPage',
+    component: NotFoundPage,
   },
 ];
 
