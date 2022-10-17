@@ -2,7 +2,7 @@
 <template>
   <li class="cart__item product">
     <div class="product__pic">
-      <img :src="product.product.img" width="120" height="120"
+      <img :src="product.product.image" width="120" height="120"
       :alt="product.product.title">
     </div>
     <h3 class="product__title">
@@ -12,28 +12,13 @@
       Артикул: {{product.product.id}}
     </span>
     <BaseCounter v-model="amount"/>
-    <!-- <div class="product__counter form__counter">
-      <button type="button" aria-label="Убрать один товар">
-        <svg width="10" height="10" fill="currentColor">
-          <use xlink:href="#icon-minus"></use>
-        </svg>
-      </button>
-      <input type="text" v-model.number="amount" name="count">
-
-      <button type="button" aria-label="Добавить один товар">
-        <svg width="10" height="10" fill="currentColor">
-          <use xlink:href="#icon-plus"></use>
-        </svg>
-      </button>
-    </div> -->
-
     <b class="product__price">
       {{(product.product.price * product.amount) | numberFormat}} ₽
     </b>
 
     <button class="product__del button-del" type="button"
     aria-label="Удалить товар из корзины"
-    @click.prevent="deleteProduct(product.productId)">
+    @click.prevent="removeProduct(product.productId)">
       <svg width="20" height="20" fill="currentColor">
         <use xlink:href="#icon-close"></use>
       </svg>
@@ -43,7 +28,7 @@
 
 <script>
 import numberFormat from '@/helpers/numberFormat';
-import { mapMutations } from 'vuex';
+import { mapActions } from 'vuex';
 import BaseCounter from './BaseCounter.vue';
 
 export default {
@@ -57,12 +42,12 @@ export default {
         return this.product.amount;
       },
       set(value) {
-        this.$store.commit('updateCartProductAmount', { productId: this.product.productId, amount: value });
+        this.$store.dispatch('updateCartProductAmount', { productId: this.product.productId, amount: value });
       },
     },
   },
   methods: {
-    ...mapMutations({ deleteProduct: 'deleteCartProduct' }),
+    ...mapActions({ removeProduct: 'removeProduct' }),
   },
   components: { BaseCounter },
 };

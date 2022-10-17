@@ -138,10 +138,22 @@ nav {
 
 <script>
 import CartDetector from '@/components/CartDetector.vue';
+import { mapActions, mapMutations } from 'vuex';
 
 export default {
   components: {
     CartDetector,
+  },
+  methods: {
+    ...mapActions(['loadCart']),
+    ...mapMutations(['updateUserAccessKey']),
+  },
+  created() {
+    const userAccessKey = localStorage.getItem('userAccessKey');
+    if (userAccessKey) {
+      this.updateUserAccessKey(userAccessKey);
+    }
+    this.loadCart();
   },
 };
 </script>
