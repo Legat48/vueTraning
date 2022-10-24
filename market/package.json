@@ -43,9 +43,7 @@
     "parserOptions": {
       "parser": "@babel/eslint-parser"
     },
-    "rules": {
-      "linebreak-style": 0
-    }
+    "rules": {}
   },
   "browserslist": [
     "> 1%",

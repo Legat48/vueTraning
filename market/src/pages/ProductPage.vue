@@ -269,7 +269,7 @@ export default {
       axios
         .get(`${API_BASE_URL}api/products/${this.$route.params.id}`, {
           params: {
-            userAccessKey: this.$store.userAccessKey,
+            userAccessKey: this.$store.state.userAccessKey,
           },
         })
         .then((response) => {

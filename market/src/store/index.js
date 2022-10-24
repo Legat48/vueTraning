@@ -10,8 +10,12 @@ export default new Vuex.Store({
     cartProductArr: [],
     userAccessKey: null,
     cartProductArrData: [],
+    orderInfo: null,
   },
   getters: {
+    orderInfo(state) {
+      return state.orderInfo;
+    },
     cartDetalProductArr(state) {
       return state.cartProductArr.map((item) => {
         const { product } = state.cartProductArrData
@@ -31,6 +35,9 @@ export default new Vuex.Store({
     },
   },
   mutations: {
+    updateOrderInfo(state, orderInfo) {
+      state.orderInfo = orderInfo;
+    },
     updateUserAccessKey(state, key) {
       state.userAccessKey = key;
     },
@@ -58,8 +65,25 @@ export default new Vuex.Store({
     removeProduct(state, productId) {
       state.cartProductArr = state.cartProductArr.filter((item) => item.productId !== productId);
     },
+    resertCart(state) {
+      state.cartProductArr = [];
+      state.cartProductArrData = {};
+    },
   },
   actions: {
+    loadOrderInfo(context, orderId) {
+      return axios
+        .get(`${API_BASE_URL}api/orders/${orderId}`, {
+          params: {
+            userAccessKey: context.state.userAccessKey,
+          },
+        })
+        .then((response) => {
+          context.commit('updateOrderInfo', response.data);
+        }).catch((e) => {
+          console.log(e);
+        });
+    },
     loadCart(context) {
       axios
         .get(`${API_BASE_URL}api/baskets`, {
@@ -74,17 +98,16 @@ export default new Vuex.Store({
           }
           context.commit('updateCartProductArrData', response.data.items);
           context.commit('syncCartProductArr');
-        }).catch((e) => {
+        }).catch(() => {
           this.productLoad = false;
           this.productLoadError = true;
-          console.log(e);
         }).then(() => {
           this.productLoad = false;
         });
     },
     addProductToCart(context, { productId, amount }) {
       // eslint-disable-next-line no-promise-executor-return
-      return (new Promise((resolve) => setTimeout(resolve, 2000)))
+      return (new Promise((resolve) => setTimeout(resolve, 1)))
         .then(() => axios
           .post(`${API_BASE_URL}api/baskets/products`, {
             productId,

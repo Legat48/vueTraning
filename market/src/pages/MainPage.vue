@@ -90,7 +90,7 @@ export default {
           }).then(() => {
             this.productLoad = false;
           });
-      }, 1000);
+      }, 1);
     },
   },
   watch: {
